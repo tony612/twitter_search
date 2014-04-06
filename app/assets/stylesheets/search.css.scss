@@ -1,0 +1,17 @@
+.search-title {
+  margin-top: 10%;
+}
+
+.search-input {
+  width: 70%;
+  margin-top: 30px;
+}
+
+.search-btn {
+  .btn {
+    z-index: 2;
+    &:hover span {
+      color: $turquoise;
+    }
+  }
+}
