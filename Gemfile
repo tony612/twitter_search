@@ -1,6 +1,8 @@
 # source 'https://rubygems.org'
 source 'http://ruby.taobao.org'
 
+gem 'flat-ui-sass', github: 'wingrunr21/flat-ui-sass'
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.0.3'
 
