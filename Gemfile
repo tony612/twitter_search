@@ -3,6 +3,8 @@ source 'http://ruby.taobao.org'
 
 gem 'flat-ui-sass', github: 'wingrunr21/flat-ui-sass'
 
+gem "figaro"
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0'
 
