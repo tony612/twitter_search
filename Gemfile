@@ -4,7 +4,7 @@ source 'http://ruby.taobao.org'
 gem 'flat-ui-sass', github: 'wingrunr21/flat-ui-sass'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.3'
+gem 'rails', '4.1.0'
 
 # Use sqlite3 as the database for Active Record
 gem 'sqlite3'
