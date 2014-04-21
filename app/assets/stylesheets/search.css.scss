@@ -1,10 +1,43 @@
-.search-title {
-  margin-top: 10%;
+.search-index {
+  .search-title {
+    margin-top: 10%;
+  }
+
+  .search-input {
+    width: 70%;
+    margin-top: 50px;
+  }
 }
 
-.search-input {
+.search-result {
   width: 70%;
-  margin-top: 30px;
+}
+
+.todo {
+  color: $midnight-blue;
+  ul {
+    background-color: $silver;
+  }
+  li {
+    background-image: none;
+    background-color: $clouds;
+    cursor: auto;
+  }
+}
+
+.todo-icon {
+  padding: 0;
+  padding-right: 20px;
+  img {
+    size: 50px;
+  }
+}
+.todo-content p {
+  margin-bottom: 0;
+}
+.todo-name {
+  color: $wet-asphalt;
+  font-size: 13px;
 }
 
 .search-btn {
@@ -14,4 +47,9 @@
       color: $turquoise;
     }
   }
+}
+
+.login-twitter {
+  margin-top: 50px;
+  width: 20%;
 }

@@ -5,6 +5,17 @@ gem 'flat-ui-sass', github: 'wingrunr21/flat-ui-sass'
 
 gem "figaro"
 
+gem 'twitter'
+
+gem "rails_warden", "~> 0.5.8"
+gem 'omniauth-twitter', :github => 'arunagw/omniauth-twitter'
+
+group :development, :test do
+  gem 'pry-rails'
+  gem 'pry-debugger'
+  gem 'spring'
+end
+
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
 gem 'rails', '4.1.0'
 
