@@ -1,20 +1,22 @@
 <div class="search-index">
   <h1 class='h-center search-title'>Search twitter</h1>
   <div class="middle search-input h-center">
-    <a href="/auth/twitter" class="btn btn-primary btn-hg login-button"
-       data-toggle="tooltip" data-original-title="Use the personalized search"
-       data-placement="right">Login with Twitter</a>
-    <br>
-    <script>
-      $(function(){
-        $('.login-button').tooltip();
-      });
-    </script>
-    or
+    <% unless user_signed_in? %>
+      <a href="/auth/twitter" class="btn btn-primary btn-hg login-button"
+         data-toggle="tooltip" data-original-title="Use the personalized search"
+         data-placement="right">Login with Twitter</a>
+      <br>
+      <script>
+        $(function(){
+          $('.login-button').tooltip();
+        });
+      </script>
+      or
+    <% end %>
     <%= form_tag search_path do -%>
       <div class="form-group">
         <div class="input-group input-group-hg">
-          <input type="text" class="form-control" placeholder="Normal Search" name="q">
+          <input type="text" class="form-control" placeholder="<%= search_placeholder %>" name="q">
           <span class="input-group-btn search-btn">
             <button type="submit" class="btn"><span class="fui-search"></span></button>
           </span>

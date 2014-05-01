@@ -1,0 +1,16 @@
+<% if user_signed_in? %>
+  <div class="pull-right">
+    <div class="dropdown user-nav">
+      <div class="dropdown-toggle user-avatar" data-toggle="dropdown">
+        <%= image_tag current_user.image, size: '32', class: 'img-circle user-avatar' %>
+        <span class="caret"></span>
+      </div>
+      <span class="dropdown-arrow"></span>
+      <ul class="dropdown-menu">
+        <li><a href="#"><%= current_user.nickname %></a></li>
+        <li role="presentation" class="divider"></li>
+        <li><%= link_to "Logout", logout_path, method: :delete %></li>
+      </u>
+    </div>
+  </div>
+<% end %>

@@ -7,7 +7,8 @@ TwitterSearch::Application.routes.draw do
 
   post 'search' => 'search#search'
 
-  get 'login' => 'sessions#new'
+  get '/login' => 'sessions#new'
+  delete '/logout' => 'sessions#destroy'
   get '/auth/:provider/callback' => 'sessions#create'
 
   # Example of regular route:

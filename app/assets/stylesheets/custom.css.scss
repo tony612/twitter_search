@@ -5,3 +5,15 @@
   margin-left: auto;
   margin-right: auto;
 }
+.user-nav {
+  margin-top: 10px;
+
+  .dropdown-menu {
+    left: auto;
+    right: 0;
+  }
+
+  .dropdown-toggle .caret {
+    margin-left: 3px;
+  }
+}
