@@ -6,6 +6,7 @@ TwitterSearch::Application.routes.draw do
   root 'search#index'
 
   post 'search' => 'search#search'
+  get 'search' => 'search#search'
 
   get '/login' => 'sessions#new'
   delete '/logout' => 'sessions#destroy'
