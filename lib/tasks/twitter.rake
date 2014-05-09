@@ -1,43 +1,42 @@
 namespace :twitter do
-  def save_friend_ids(client, mode='a', user=nil)
-    following_ids = Thread.new { client.friend_ids(user).to_a }
-    follower_ids = Thread.new { client.follower_ids(user).to_a }
-    friend_ids = following_ids.value & follower_ids.value
-    File.open './db/friend_ids', mode do |f|
-      friend_ids.in_groups_of(10, false) do |group|
-        f.write(group.join(' ') + "\n")
-      end
-      f.write("\n")
-    end
-    friend_ids
+  def find_friend_ids(client, uid)
+    uid = uid.to_i
+    following_ids = Thread.new { client.friend_ids(uid).to_a }
+    follower_ids = Thread.new { client.follower_ids(uid).to_a }
+    following_ids.value & follower_ids.value
   end
 
-  desc "List bi-follow users"
-  task friends: :environment do
-    client = Twitter::REST::Client.new do |config|
+  def client
+    @client ||= Twitter::REST::Client.new do |config|
       config.consumer_key    = ENV['TWITTER_CONSUMER_KEY']
       config.consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
       config.bearer_token    = ENV['TWITTER_BEARER_TOKEN']
       config.access_token    = ENV['TWITTER_ACCESS_TOKEN']
       config.access_token_secret = ENV['TWITTER_ACCESS_SECRET']
     end
-    friend_ids_1 = save_friend_ids(client, 'w')
-    p friend_ids_1.count
-
-    friend_ids_2 = friend_ids_1.map do |id|
-      ids = save_friend_ids(client, 'a', id)
-      p ids.count
-      sleep(90)
-      ids
-    end
-    p friend_ids_2.count
-    friend_ids = (friend_ids_2 << friend_ids_1).flatten.uniq
-    p friend_ids.count
-    File.open './db/friend_ids.txt', 'w' do |f|
-      friend_ids.each do |id|
-        f.write(id + "\n")
-      end
-    end
   end
 
+  def update_user_friends(uid, ids, class_n='class1')
+    user = User.find_by(uid: uid)
+    user.friends[class_n] = ids
+    user.save!
+  end
+
+  desc "update friends"
+  task :friends, [:user_id] => :environment do |t, args|
+    uid = args[:user_id]
+    ids = find_friend_ids(client, uid)
+    update_user_friends(uid, ids)
+
+    ids2 = ids.map do |id|
+      begin
+        find_friend_ids(client, id)
+        sleep(90)
+      rescue e
+        p e
+        []
+      end
+    end.flatten
+    update_user_friends(uid, id2, 'class2')
+  end
 end
