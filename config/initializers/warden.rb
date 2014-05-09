@@ -6,10 +6,11 @@ end
 # Setup Session Serialization
 class Warden::SessionSerializer
   def serialize(user)
-    user.id
+    user.id.to_s
   end
 
   def deserialize(id)
+    id = id["$oid"] unless id.is_a?(String)
     User.find(id)
   end
 end

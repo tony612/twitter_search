@@ -20,7 +20,10 @@ end
 gem 'rails', '4.1.0'
 
 # Use sqlite3 as the database for Active Record
-gem 'sqlite3'
+# gem 'sqlite3'
+gem "mongoid", "~> 4.0.0.beta1"
+gem 'bson_ext'
+
 
 # Use SCSS for stylesheets
 gem 'sass-rails', '~> 4.0.0'
