@@ -16,7 +16,8 @@ class User
       %w[nickname name location image description].each do |m|
         user.send "#{m}=", info.send(m)
       end
-      user.auth = { access_token: auth.credentials.token }
+      user.auth = { access_token: auth.credentials.token,
+                    access_secret: auth.credentials.secret }
     end
   end
 
