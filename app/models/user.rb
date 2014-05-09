@@ -19,4 +19,14 @@ class User
       user.auth = { access_token: auth.credentials.token }
     end
   end
+
+  def sort_searched_tweets(tweets)
+    scores = tweets.map do |t|
+      score = 0
+      score += 20 if (friends['class1'] || []).include? t.user.id
+      score += 10 if (friends['class2'] || []).include? t.user.id
+      score
+    end
+    tweets.map.with_index.sort_by { |t, index| scores[index] }.map(&:first)
+  end
 end
