@@ -12,6 +12,8 @@ TwitterSearch::Application.routes.draw do
   delete '/logout' => 'sessions#destroy'
   get '/auth/:provider/callback' => 'sessions#create'
 
+  get '/users/:id' => 'users#show', as: :user
+
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
 
