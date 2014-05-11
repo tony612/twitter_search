@@ -33,4 +33,12 @@ namespace :twitter do
     end.flatten
     update_user_friends(uid, id2, 'class2')
   end
+
+  desc "update tweets words bag"
+  task :update_words_bag, [:user_id] => :environment do |t, args|
+    uid = args[:user_id]
+    user = User.find_by(uid: uid)
+
+    user.update_words_bag
+  end
 end

@@ -10,6 +10,8 @@ gem 'twitter'
 gem "rails_warden", "~> 0.5.8"
 gem 'omniauth-twitter', :github => 'arunagw/omniauth-twitter'
 
+gem 'ruby-stemmer'
+
 group :development, :test do
   gem 'pry-rails'
   gem 'pry-debugger'
