@@ -37,7 +37,7 @@ class User
 
   def score_for_tweet(tweet)
     words = TwitterHelper.tweet_text_to_words(tweet.text)
-    words.inject(0) do |memo, word|
+    words.uniq.inject(0) do |memo, word|
       score = words_bag[word] || 0
       memo + score
     end
