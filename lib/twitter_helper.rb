@@ -2,6 +2,7 @@ require 'lingua/stemmer'
 
 class TwitterHelper
   class << self
+    MAX_ATTEMPTS = 3
 
     StopWords = %w{a able about across after all almost also am among an and any
       are as at be because been but by can cannot could dear did do does either
@@ -14,13 +15,13 @@ class TwitterHelper
     }
 
     def handle_rate_limit
-      max_attempts = 3
       num_attempts = 0
       begin
         num_attempts += 1
         yield if block_given?
       rescue Twitter::Error::TooManyRequests => error
-        if num_attempts <= max_attempts
+        if num_attempts <= MAX_ATTEMPTS
+          p num_attempts, error.rate_limit.reset_in
           sleep error.rate_limit.reset_in + 1
           retry
         else

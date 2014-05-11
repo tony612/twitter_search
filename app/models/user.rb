@@ -29,9 +29,18 @@ class User
       score = 0
       score += 20 if (friends['class1'] || []).include? t.user.id
       score += 10 if (friends['class2'] || []).include? t.user.id
+      score += score_for_tweet(t)
       score
     end
-    tweets.map.with_index.sort_by { |t, index| scores[index] }.map(&:first)
+    tweets.map.with_index.sort_by { |t, index| -scores[index] }.map(&:first)
+  end
+
+  def score_for_tweet(tweet)
+    words = TwitterHelper.tweet_text_to_words(tweet.text)
+    words.inject(0) do |memo, word|
+      score = words_bag[word] || 0
+      memo + score
+    end
   end
 
   def get_all_tweets
