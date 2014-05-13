@@ -21,7 +21,6 @@ class TwitterHelper
         yield if block_given?
       rescue Twitter::Error::TooManyRequests => error
         if num_attempts <= MAX_ATTEMPTS
-          p num_attempts, error.rate_limit.reset_in
           sleep error.rate_limit.reset_in + 1
           retry
         else
