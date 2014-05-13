@@ -12,6 +12,7 @@ class User
   field :auth, type: Hash
   field :friends, type: Hash, default: {}
   field :words_bag, type: Hash, default: {}
+  field :remembered_at, type: DateTime
 
   def self.find_or_create_from_auth(uid, auth)
     find_or_create_by(uid: uid) do |user|
@@ -22,6 +23,24 @@ class User
       user.auth = { access_token: auth.credentials.token,
                     access_secret: auth.credentials.secret }
     end
+  end
+
+  def self.find_by_remember_token(token)
+    u = find(token.to_s)
+    if u && u.remembered_at && u.remembered_at < Time.now
+      u
+    end
+  end
+
+  def remember_me!
+    self.remembered_at = DateTime.now
+    save(validate: false) if self.changed?
+  end
+
+  def forget_me!
+    return unless persisted?
+    self.remembered_at = nil
+    save(validate: false)
   end
 
   def sort_searched_tweets(tweets)

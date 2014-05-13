@@ -10,7 +10,7 @@ class ApplicationController < ActionController::Base
   end
 
   def user_signed_in?
-    warden.authenticated?
+    warden.authenticate?
   end
   helper_method :user_signed_in?
 
