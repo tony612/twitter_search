@@ -11,7 +11,8 @@ class SearchController < ApplicationController
         config.consumer_secret = ENV['TWITTER_CONSUMER_SECRET']
         config.bearer_token    = ENV['TWITTER_BEARER_TOKEN']
       end
-      @tweets = client.search(query, :result_type => result_type, lang: 'en').take(100)
+      results = client.search(query, :result_type => result_type, lang: 'en')
+      @tweets = results.take(100)
       @tweets = current_user.sort_searched_tweets(@tweets) if user_signed_in?
     else
       flash[:warning] = 'Please input the keywords'

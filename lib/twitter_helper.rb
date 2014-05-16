@@ -59,7 +59,10 @@ class TwitterHelper
     end
 
     def tweet_text_to_words(text)
+      # downcase
       # remove url
+      # split words
+      # select only words beginning with letter
       # change gooooood to good
       # Remove stop words, and single letter
       # Stemming
