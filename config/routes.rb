@@ -13,6 +13,8 @@ TwitterSearch::Application.routes.draw do
   get '/auth/:provider/callback' => 'sessions#create'
 
   get '/users/:id' => 'users#show', as: :user
+  get '/users/:id/filter' => 'users#filter', as: :user_filter
+  put '/users/:id/filter' => 'users#update_filter', as: :user_update_filter
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'

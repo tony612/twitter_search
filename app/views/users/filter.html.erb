@@ -1,0 +1,21 @@
+<%= javascript_include_tag "jquery.tagsinput" %>
+
+<%= form_tag user_update_filter_path(current_user), method: :put do %>
+  <div class="row">
+    <div class="col-xs-2">
+      Black list:
+    </div>
+    <input name="black_list" class="tagsinput col-xs-9" value="<%= @black_list.join(',') %>" />
+  </div>
+
+  <div class="row">
+    <div class="col-xs-2">
+      White list:
+    </div>
+    <input name="white_list" class="tagsinput col-xs-9" value="<%= @white_list.join(',') %>" />
+  </div>
+  <button type="submit" class="btn btn-info">Submit</button>
+<% end %>
+<script type="text/javascript" charset="utf-8">
+  $(".tagsinput").tagsInput();
+</script>

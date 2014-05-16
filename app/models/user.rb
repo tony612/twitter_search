@@ -13,6 +13,7 @@ class User
   field :friends, type: Hash, default: {}
   field :words_bag, type: Hash, default: {}
   field :remembered_at, type: DateTime
+  field :config, type: Hash, default: {}
 
   def self.find_or_create_from_auth(uid, auth)
     find_or_create_by(uid: uid) do |user|
@@ -57,7 +58,7 @@ class User
   def score_for_tweet(tweet)
     words = TwitterHelper.tweet_text_to_words(tweet.text)
     words.uniq.inject(0) do |memo, word|
-      score = words_bag[word] || 0
+      score = filtered_words_bag[word] || 0
       memo + score
     end
   end
@@ -85,6 +86,25 @@ class User
     end
     self.words_bag = words_bag
     self.save!
+  end
+
+  def black_list
+    config['black_list'] || {}
+  end
+
+  def white_list
+    config['white_list'] || {}
+  end
+
+  def update_filters!(black_list, white_list)
+    self.config['black_list'] = black_list
+    self.config['white_list'] = white_list
+    self.save!
+  end
+
+  def filtered_words_bag
+    words_bag.reject { |k, v| black_list.keys.include?(k) }
+             .merge white_list
   end
 
 end
