@@ -1,3 +1,5 @@
+<%= javascript_include_tag "highcharts.src" %>
+
 <div class="search-result middle">
   <h6 class='h-center search-title'>Search twitter</h6>
   <div class="search-input">
@@ -14,7 +16,7 @@
   </div>
   <div class="results todo">
     <ul>
-      <% @tweets.each do |tweet| -%>
+      <% @tweets.each_with_index do |tweet, index| -%>
         <li>
           <div class="todo-icon">
             <img src="<%= tweet.user.profile_image_uri.to_s %>">
@@ -23,10 +25,87 @@
             <h6 class="todo-name">
               @<%= tweet.user.username %>
             </h6>
-            <p><%= tweet.text %></p>
+            <p data-tf="<%= @word_scores[index] %>"><%= tweet.text %></p>
+          </div>
+          <div class="todo-action pull-right">
+            <a href="<%= tweet.uri %>" target="_blank">
+              <span class="glyphicon glyphicon-link"></span>
+            </a>
+            <a href="javascript:void(0);" class="tf-show"  data-toggle="modal" data-target="#myModal">
+              <span class="glyphicon glyphicon-picture"></span>
+            </a>
           </div>
         </li>
       <% end -%>
     </ul>
   </div>
 </div>
+
+<div class="modal fade" id="myModal">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">Show text frequence</h4>
+      </div>
+      <div class="modal-body" id="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
+
+<script type="text/javascript" charset="utf-8">
+  $('.tf-show').click(function() {
+    $('.results.todo li').removeClass('active');
+    $(this).parents('li').addClass('active');
+  })
+
+  $('#myModal').on('shown.bs.modal', function (e) {
+    $("#myModal .modal-body").empty();
+    function showTF(data) {
+      $('#myModal .modal-body').highcharts({
+        chart: {
+          plotBackgroundColor: null,
+          plotBorderWidth: null,
+          plotShadow: false
+        },
+        title: {
+          text: ''
+        },
+        tooltip: {
+          pointFormat: 'Weight: {point.y}<br/>Percentage: <b>{point.percentage:.1f}%</b>'
+        },
+        plotOptions: {
+          pie: {
+            allowPointSelect: true,
+            cursor: 'pointer',
+            dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %',
+              style: {
+                color: (Highcharts.theme && Highcharts.theme.contrastTextColor) || 'black'
+              }
+            }
+          }
+        },
+        series: [{
+          type: 'pie',
+          name: 'Weight',
+          data: data
+        }]
+      });
+    }
+    var data = $('li.active .todo-content p')
+      .data('tf')
+      .split(';')
+      .map(function(item) {
+        arr = item.split(',');
+        return [arr[0], +arr[1]];
+      });
+    showTF(data);
+  })
+
+</script>

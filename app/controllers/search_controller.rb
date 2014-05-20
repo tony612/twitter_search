@@ -13,7 +13,7 @@ class SearchController < ApplicationController
       end
       results = client.search(query, :result_type => result_type, lang: 'en')
       @tweets = results.take(100)
-      @tweets = current_user.sort_searched_tweets(@tweets) if user_signed_in?
+      @tweets, @word_scores = current_user.sort_searched_tweets(@tweets) if user_signed_in?
     else
       flash[:warning] = 'Please input the keywords'
       @tweets = []

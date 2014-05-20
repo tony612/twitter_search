@@ -14,5 +14,6 @@
 //= require jquery_ujs
 //= require bootstrap/tooltip
 //= require bootstrap/dropdown
+//= require bootstrap/modal
 //= require flat-ui
 //= require_tree .

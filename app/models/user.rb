@@ -45,22 +45,29 @@ class User
   end
 
   def sort_searched_tweets(tweets)
+    word_scores = []
     scores = tweets.map do |t|
       score = 0
-      score += 20 if (friends['class1'] || []).include? t.user.id
-      score += 10 if (friends['class2'] || []).include? t.user.id
-      score += score_for_tweet(t)
+      # score += 20 if (friends['class1'] || []).include? t.user.id
+      # score += 10 if (friends['class2'] || []).include? t.user.id
+      score, str = score_for_tweet(t)
+      word_scores << str
       score
     end
-    tweets.map.with_index.sort_by { |t, index| -scores[index] }.map(&:first)
+    tweets = tweets.map.with_index.sort_by { |t, index| -scores[index] }.map(&:first)
+    word_scores = word_scores.map.with_index.sort_by { |t, index| -scores[index] }.map(&:first)
+    [tweets, word_scores]
   end
 
   def score_for_tweet(tweet)
     words = TwitterHelper.tweet_text_to_words(tweet.text)
-    words.uniq.inject(0) do |memo, word|
+    word_scores = []
+    score = words.uniq.inject(0) do |memo, word|
       score = filtered_words_bag[word] || 0
+      word_scores << "#{word},#{score}" if score != 0
       memo + score
     end
+    [score, word_scores * ';']
   end
 
   def get_all_tweets
