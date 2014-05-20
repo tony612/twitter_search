@@ -3,3 +3,16 @@
 @import 'flat-ui';
 @import 'custom';
 @import 'search';
+
+$bs-icon-font-path: "bootstrap/" !default;
+$bs-icon-font-name:          "glyphicons-halflings-regular" !default;
+$bs-icon-font-svg-id:        "glyphicons_halflingsregular" !default;
+
+@font-face {
+  font-family: 'Glyphicons Halflings';
+  src: url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$bs-icon-font-path}#{$bs-icon-font-name}.eot'), '#{$bs-icon-font-path}#{$bs-icon-font-name}.eot'));
+  src: url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$bs-icon-font-path}#{$bs-icon-font-name}.eot?#iefix'), '#{$bs-icon-font-path}#{$bs-icon-font-name}.eot?#iefix')) format('embedded-opentype'),
+       url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$bs-icon-font-path}#{$bs-icon-font-name}.woff'), '#{$bs-icon-font-path}#{$bs-icon-font-name}.woff')) format('woff'),
+       url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$bs-icon-font-path}#{$bs-icon-font-name}.ttf'), '#{$bs-icon-font-path}#{$bs-icon-font-name}.ttf')) format('truetype'),
+       url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$bs-icon-font-path}#{$bs-icon-font-name}.svg##{$bs-icon-font-svg-id}'), '#{$bs-icon-font-path}#{$bs-icon-font-name}.svg##{$bs-icon-font-svg-id}')) format('svg');
+}
