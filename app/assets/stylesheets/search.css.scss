@@ -11,6 +11,12 @@
 
 .search-result {
   width: 70%;
+  .results ul li:hover {
+    background-color: $clouds;
+    .todo-action a {
+      opacity: 1;
+    }
+  }
 }
 
 .todo {
@@ -20,7 +26,7 @@
   }
   li {
     background-image: none;
-    background-color: $clouds;
+    background-color: #f6f8f8;
     cursor: auto;
   }
 }
@@ -38,6 +44,12 @@
 .todo-name {
   color: $wet-asphalt;
   font-size: 13px;
+}
+.todo-action a {
+  opacity: 0;
+  &.tf-show {
+    margin-left: 10px;
+  }
 }
 
 .search-btn {
