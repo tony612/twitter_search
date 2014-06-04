@@ -44,12 +44,13 @@ class User
     save(validate: false)
   end
 
+  # *tweets* is an array of sorted tweets: [tweet2, tweet1, tweet3]
+  # *word_scores* is an corresponding array of word,score:
+  #   ["foo,2;bar,3", "foo,1;bar,2", "foo,3;bar,1"]
   def sort_searched_tweets(tweets)
     word_scores = []
     scores = tweets.map do |t|
       score = 0
-      # score += 20 if (friends['class1'] || []).include? t.user.id
-      # score += 10 if (friends['class2'] || []).include? t.user.id
       score, str = score_for_tweet(t)
       word_scores << str
       score
