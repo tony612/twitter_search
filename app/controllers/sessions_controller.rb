@@ -1,6 +1,7 @@
 class SessionsController < ApplicationController
   def create
     warden.authenticate!
+    CrawlWorker.perform_async(current_user.id.to_s)
     redirect_to '/', notice: "Authing successful"
   end
 
