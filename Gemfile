@@ -1,5 +1,8 @@
-# source 'https://rubygems.org'
-source 'http://ruby.taobao.org'
+if ENV['USE_OFFICIAL_GEM_SOURCE']
+  source 'https://rubygems.org'
+else
+  source 'http://ruby.taobao.org'
+end
 
 gem 'flat-ui-sass', github: 'wingrunr21/flat-ui-sass'
 
